@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Roof Games</title>
+    <style>
+      body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #F4F6F8;
+      color: #333;
+    }
+
+    header {
+      background-color: #3B9973;
+      padding: 50px;
+      margin-bottom: 50px;
+      color: #FFF;
+    }
+
+    section {
+      background-color: #FFF;
+      padding: 50px;
+      margin-bottom: 50px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    h1, h2, h3 {
+      margin-top: 0;
+      color: black;
+    }
+
+    a {
+      color: black;
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    ol, ul {
+      padding-left: 20px;
+    }
+
+    /* Bingo game */
+
+    /* Add shadowed box outline for Bingo game */
+    #bingo-container {
+      display: flex;
+      justify-content: center;
+      margin-top: 30px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    table {
+      border-collapse: collapse;
+      margin-bottom: 20px;
+      transform: rotateX(40deg) rotateZ(-20deg);
+    }
+
+    td {
+      border: 1px solid #ccc;
+      padding: 10px;
+      text-align: center;
+      background-color: #F4F6F8;
+      color: black;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    td.selected {
+      background-color: #42403c;
+      color: #FFF;
+    }
+
+    td:hover {
+      background-color: #3B9973;
+      color: #FFF;
+    }
+
+    #bingo-controls {
+      display: flex;
+      justify-content: center;
+      margin-top: 20px;
+    }
+
+    #roll-button {
+      display: inline-block;
+      padding: 10px 20px;
+      background-color: #3B9973;
+      color: #FFF;
+      border: none;
+      border-radius: 4px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    #roll-button:hover {
+      background-color: #367d61;
+    }
+
+    #bingo-button {
+      display: inline-block;
+      padding: 10px 20px;
+      background-color: #3B9973;
+      color: #FFF;
+      border: none;
+      border-radius: 4px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      margin-left: 10px;
+    }
+
+    #bingo-button:hover {
+      background-color: #367d61;
+    }
+
+    /* sections */
+
+    #home {
+      background-color: lightblue;
+    }
+
+    #about {
+      background-color: lightyellow;
+    }
+
+    #games {
+      background-color: lightgreen;
+    }
+
+    /* Unroofing */
+
+    input[type="submit"] {
+      display: inline-block;
+      padding: 10px 20px;
+      background-color: #3B9973;
+      color: #FFF;
+      border: none;
+      border-radius: 4px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    input[type="submit"]:hover {
+      background-color: #367d61;
+    }
+
+    /* Unroofing */
+
+    #generate-button,
+    #solution-button {
+      display: inline-block;
+      padding: 10px 20px;
+      background-color: #3B9973;
+      color: #FFF;
+      border: none;
+      border-radius: 4px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      margin-right: 10px;
+    }
+
+    #generate-button:hover,
+    #solution-button:hover {
+      background-color: #367d61;
+    }
+
+
+    #unroofing-board {
+      display: flex;
+      justify-content: center;
+      perspective: 1000px;
+      margin-top: 30px;
+    }
+
+    #unroofing-board table {
+      border-collapse: collapse;
+      margin-bottom: 20px;
+      transform: rotateX(40deg) rotateZ(-20deg);
+    }
+
+    #unroofing-board td {
+      border: 1px solid #ccc;
+      padding: 10px;
+      text-align: center;
+      background-color: #ccc;
+      color: black;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    #unroofing-board td.clicked {
+      background-color: #FFF;
+    }
+
+    #unroofing-board td:hover {
+      background-color: #DDD;
+    }
+
+    #numbers {
+      margin-bottom: 20px;
+      font-weight: bold;
+    }
+
+    </style>
+  </head>
+
+  <body>
+
+    <section id="home">
+      <h1>Welcome to the Rooftop Party!</h1>
+    </section>
+
+    <section id="about">
+      <h2>About Roofing</h2>
+      <article>
+        <h3>Roofing History</h3>
+        <p>
+          Roofing has been around for a long time. The earliest roots of roofing can be traced back to Siberia in 40,000 BC1. In 100 BC, Romans introduced a variety of slate and tile-based roofs, usually over open-air homes and 
+          <a href="https://www.roofingexperts.com/history-roofing/">amphitheaters</a>.
+          Throughout history, roofing has evolved from straws or twigs to types of metals and tiles
+          <a href="https://www.tekroof.com/history-of-roofing/">tiles</a>.
+          Ancient Chinese civilizations are credited with inventing clay roofing tile sometime around 10,000 B.C. The invention of clay tile roofs was key in many ways. The roofs were flame-resistant, water-resistant, and durable enough to last more than 100 
+          <a href="https://www.amcoroof.com/blog/history-of-roofing/">years</a>.
+        </p>
+        <p>
+          Wood and slate shingles and clay tiles were the predominant roofing choice until the mid-19th century when metal and bituminous roofing systems made low-slope applications possible. During the 20th century, several new materials were developed for low- and steep-sloped 
+          <a href="https://www.architectmagazine.com/technology/products/throwback-thursday-roofing_o">roofs</a>.
+          Today, there are many different types of roofing materials available including asphalt shingles, metal roofing, wood shakes and shingles, clay and concrete tiles, slate, rubber slate, and 
+          <a href="https://www.tekroof.com/history-of-roofing/">more</a>. Renovate Robotics focuses on installing asphalt shingles.
+        </p>
+      </article>
+      <article>
+        <h3>Shingling Steps</h3>
+        <ol>
+          <li>Measure and mark the roof area where you want to install the shingles. You will need to cut some shingles to fit the edges and corners of the roof.</li>
+          <li>Install the starter strip along the lower edge of the roof, overlapping the eaves by about 1/4 inch. This will prevent water from seeping under the shingles and damaging the roof deck.</li>
+          <li>Nail the first row of shingles on top of the starter strip, using four nails per shingle. The nails should be about 3/4 inch from each edge and 1 inch above the cutouts. Make sure the shingles are aligned with the edge of the roof and each other.</li>
+          <li>Install the second row of shingles, offsetting them by half a shingle width from the first row. This will create a staggered pattern that improves the appearance and performance of the roof. Continue nailing the shingles in rows, working your way up to the ridge of the roof.</li>
+          <li>Cut and install ridge cap shingles along the peak of the roof, overlapping them by at least 4 inches. Nail them down with two nails on each side, about 1 inch from the edge.</li>
+          <li>Inspect your work and make sure there are no gaps, loose nails, or damaged shingles. If you find any problems, fix them as soon as possible.</li>
+        </ol>
+      </article>
+      <article>
+        <h3>Roofing Safety</h3>
+        <p>
+          Roofing is one of the most dangerous occupations in the construction industry. Roofers are exposed to various hazards, such as falls, electrocution, heat stroke, and injuries from tools and equipment. According to the Occupational Safety and Health Administration (OSHA), roofing workers have a fatality rate of 51.5 per 100,000 full-time workers, which is more than 10 times the national average and ranks among the top ten most dangerous jobs in America. Therefore, it is essential for roofers to follow safety requirements and best practices to prevent accidents and injuries. Some of the safety requirements for roofers include:
+        </p>
+        <ul>
+          <li>Wearing appropriate personal protective equipment (PPE), such as hard hats, gloves, boots, eye protection, and harnesses.</li>
+          <li>Using fall protection systems, such as guardrails, safety nets, or personal fall arrest systems, when working at heights of six feet or more.</li>
+          <li>Inspecting and maintaining tools and equipment regularly and using them properly.</li>
+          <li>Avoiding contact with power lines and other electrical sources.</li>
+          <li>Staying hydrated and taking breaks in shaded areas to prevent heat-related illnesses.</li>
+          <li>Reporting any unsafe conditions or incidents to supervisors or managers.</li>
+        </ul>
+        <p>By following these safety requirements, roofers can reduce the risks of serious or fatal injuries and ensure a safe and productive work environment.</p>
+      </article>
+    </section>
+
+    <section id="games">
+      <h2>Games</h2>
+      <ul>
+        <li><h1>Which Type of Shingle Are You?</h1></li>
+        <form id="quiz">
+            <p>Question 1: Which is your favorite color?</p>
+            <input type="radio" name="q1" value="pink">Pink<br>
+            <input type="radio" name="q1" value="blue">Blue<br>
+            <input type="radio" name="q1" value="black">Black<br>
+            <input type="radio" name="q1" value="green">Green<br>
+            <input type="radio" name="q1" value="red">Red<br>
+            <p>Question 2: Are you inspired by the language or culture of any of these nationalities?</p>
+            <input type="radio" name="q2" value="irish">Irish<br>
+            <input type="radio" name="q2" value="french">French<br>
+            <input type="radio" name="q2" value="japanese">Japanese<br>
+            <input type="radio" name="q2" value="spanish">Spanish<br>
+            <input type="radio" name="q2" value="spanish">No<br>
+            <p>Question 3: Where in the US would you want to live?</p>
+            <input type="radio" name="q3" value="west">West Coast<br>
+            <input type="radio" name="q3" value="east">East Coast<br>
+            <input type="radio" name="q3" value="midwest">Midwest<br>
+            <input type="radio" name="q3" value="south">South<br>
+            <input type="radio" name="q3" value="north">North<br>
+            <p>Question 4: Do you like the Pink Panther movies?</p>
+            <input type="radio" name="q4" value="yes">Yes<br>
+            <input type="radio" name="q4" value="no">No<br>
+            <p>Question 5: When you order food, which factor do you prioritize?</p>
+            <input type="radio" name="q5" value="volume">Maximize Volume<br>
+            <input type="radio" name="q5" value="cheap">Affordability<br>
+            <input type="radio" name="q5" value="traditional">Traditional Flavors<br>
+            <input type="radio" name="q5" value="healthy">Health and Nutrition<br>
+            <input type="radio" name="q5" value="variety">Variety and Experimentation<br>
+              
+            <!-- Add more questions here -->
+            <br>
+            <input type="submit" value="Submit">
+        </form>
+        <br>
+        <div id="result"></div>
+        <br>
+
+        <li><h1>Shingle Bingo</h1></li>
+        <p>Try to get 5 shingles vertically, horizontally, or diagonally across.</p>
+        <div id="bingo-container">
+          <table id="bingo-board"></table>
+        </div>
+    
+        <div id="bingo-controls">
+          <button id="roll-button">Roll</button>
+        </div>   
+  
+
+        <li><h1>Unroofing Riddles</h1></li>
+        <p>Try to Unroof the fastest. Remove a shingle when you solve the riddle first.</p>
+        <div id="unroofing-board">
+          <table>
+            <tr>
+              <td>: : :</td>
+              <td>: : :</td>
+              <td>: : :</td>
+              <td>: : :</td>
+              <td>: : :</td>
+            </tr>
+            <tr>
+              <td>: : :</td>
+              <td>: : :</td>
+              <td>: : :</td>
+              <td>: : :</td>
+              <td>: : :</td>
+            </tr>
+            <tr>
+              <td>: : :</td>
+              <td>: : :</td>
+              <td>: : :</td>
+              <td>: : :</td>
+              <td>: : :</td>
+            </tr>
+            <tr>
+              <td>: : :</td>
+              <td>: : :</td>
+              <td>: : :</td>
+              <td>: : :</td>
+              <td>: : :</td>
+            </tr>
+            <tr>
+              <td>: : :</td>
+              <td>: : :</td>
+              <td>: : :</td>
+              <td>: : :</td>
+              <td>: : :</td>
+            </tr>
+          </table>
+        </div>
+        <div id="riddle-container">
+          <p id="riddle"></p>
+        </div>
+        <div id="button-container">
+          <button id="generate-button">Generate</button>
+          <button id="solution-button">Solution</button>
+        </div>
+      </ul>
+    </section>
+
+    <script>
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            document.querySelector(this.getAttribute("href")).scrollIntoView({
+            behavior: "smooth",
+            });
+        });
+        });
+    </script>
+
+    <script>
+      const board = document.querySelector('#bingo-board');
+      const rollButton = document.querySelector('#roll-button');
+      const bingoButton = document.querySelector('#bingo-button');
+      const size = 5;
+      let numbers = [...Array(size * size).keys()].map(i => i + 1);
+      let rolledNumbers = [];
+      numbers.sort(() => Math.random() - 0.5);
+
+      for (let i = 0; i < size; i++) {
+        const row = document.createElement('tr');
+        for (let j = 0; j < size; j++) {
+          const cell = document.createElement('td');
+          cell.textContent = numbers[i * size + j];
+          row.appendChild(cell);
+        }
+        board.appendChild(row);
+      }
+
+      board.addEventListener('click', (event) => {
+        const clickedCell = event.target;
+        clickedCell.classList.toggle('selected');
+      });
+
+      rollButton.addEventListener('click', () => {
+        if (numbers.length > 0) {
+          const randomNumber = numbers.splice(
+            Math.floor(Math.random() * numbers.length),
+            1
+          )[0];
+          rolledNumbers.push(randomNumber);
+
+          const rolledNumbersText = rolledNumbers.join(', ');
+          rollButton.textContent = rolledNumbersText;
+
+          if (numbers.length === 0) {
+            rollButton.disabled = true;
+          }
+        }
+      });
+
+      const unroofingBoard = document.querySelector('#unroofing-board');
+      const unroofingCells = unroofingBoard.querySelectorAll('td');
+
+      unroofingCells.forEach((cell) => {
+        cell.addEventListener('click', () => {
+          cell.classList.toggle('clicked');
+        });
+      });
+    </script>
+   
+    <script>
+      document.getElementById("quiz").onsubmit = function(event) {
+        event.preventDefault();
+
+        // Define the possible results and their corresponding points
+        const results = {
+          Malarkey: 0,
+          GAF: 0,
+          "Certain Teed": 0,
+          IKO: 0,
+          "Owens Corning": 0
+        };
+
+        // Assign points based on selected answers
+        const selectedAnswers = {
+          q1: document.querySelector('input[name="q1"]:checked').value,
+          q2: document.querySelector('input[name="q2"]:checked').value,
+          q3: document.querySelector('input[name="q3"]:checked').value,
+          q4: document.querySelector('input[name="q4"]:checked').value,
+          q5: document.querySelector('input[name="q5"]:checked').value
+        };
+
+        if (selectedAnswers.q1 === "green" || selectedAnswers.q2 === "irish" || selectedAnswers.q3 === "west") {
+          results.Malarkey++;
+        }
+
+        if (selectedAnswers.q1 === "red" || selectedAnswers.q3 === "east" || selectedAnswers.q5 === "volume") {
+          results.GAF++;
+        }
+
+        if (selectedAnswers.q2 === "french" || selectedAnswers.q1 === "blue" || selectedAnswers.q5 === "cheap") {
+          results["Certain Teed"]++;
+        }
+
+        if (selectedAnswers.q3 === "midwest" || selectedAnswers.q1 === "black" || selectedAnswers.q1 === "red" || selectedAnswers.q5 === "traditional") {
+          results.IKO++;
+        }
+
+        if (selectedAnswers.q1 === "pink" || selectedAnswers.q3 === "midwest" || selectedAnswers.q4 === "yes") {
+          results["Owens Corning"]++;
+        }
+
+        // Find the result with the maximum points
+        let maxPoints = 0;
+        let finalResult = "";
+        for (const result in results) {
+          if (results[result] > maxPoints) {
+            maxPoints = results[result];
+            finalResult = result;
+          } else if (results[result] === maxPoints) {
+            // If there is a tie, randomly choose between the tied results
+            if (Math.random() >= 0.5) {
+              finalResult = result;
+            }
+          }
+        }
+
+        // Display the result
+        document.getElementById("result").innerHTML = `You are ${finalResult}!`;
+        
+        // Clear the radio button selections
+        document.querySelectorAll('input[type="radio"]:checked').forEach(radio => {
+          radio.checked = false;
+        });
+      };
+    </script>
+
+    <script>
+      // Define an array of riddles and their corresponding solutions
+      const riddles = [
+      {
+        question: "I'm a layer that shields from hail and rain, ensuring your roof doesn't sustain any pain. What am I?",
+        answer: "Impact-resistant roofing"
+      },
+      {
+        question: "I'm a material that seals the roof tight, preventing leaks and ensuring it's watertight. What am I?",
+        answer: "Roof underlayment"
+      },
+      {
+        question: "I'm a barrier against ice and snow, stopping ice dams from causing any woe. What am I?",
+        answer: "Ice and water shield"
+      },
+      {
+        question: "I'm a sealant applied with care, keeping out moisture and offering roof repair. What am I?",
+        answer: "Roof caulk or roof sealant"
+      },
+      {
+        question: "I'm a process of securing shingles in place, ensuring they won't fly off in a chase. What am I?",
+        answer: "Roof fastening or roof installation"
+      },
+      {
+        question: "I'm a material that resists fire's might, protecting your roof day and night. What am I?",
+        answer: "Fire-resistant roofing"
+      },
+      {
+        question: "I'm a layer that adds insulation's power, keeping your home cozy every hour. What am I?",
+        answer: "Roof insulation or attic insulation"
+      },
+      {
+        question: "I'm a mechanism that channels rain, ensuring it flows away and doesn't remain. What am I?",
+        answer: "Roof gutter or roof drainage system"
+      },
+      {
+        question: "I'm a method of flashing around chimneys and vents, preventing leaks and future events. What am I?",
+        answer: "Roof flashing or roof vent flashing"
+      },
+      {
+        question: "I'm a process that inspects and maintains, keeping your roof in top shape with no strains. What am I?",
+        answer: "Roof maintenance or roof inspection"
+      },
+      {
+        question: "I'm a pointy structure on top, providing extra space that you can't stop. What am I?",
+        answer: "Roof peak or roof gable"
+      },
+      {
+        question: "I'm a round opening in the roof's crown, letting natural light and air come down. What am I?",
+        answer: "Roof skylight"
+      },
+      {
+        question: "I'm a metal piece that covers the gap, ensuring rainwater won't make your roof flap. What am I?",
+        answer: "Roof valley flashing"
+      },
+      {
+        question: "I'm a protective layer that shields from fire, keeping your home safe as you desire. What am I?",
+        answer: "Fire-rated roof"
+      },
+      {
+        question: "I'm a wide, horizontal ledge, adding charm and character to the roof's edge. What am I?",
+        answer: "Roof eave or roof fascia"
+      },
+      {
+        question: "I'm a feature that lets air circulate, preventing moisture and mold, it's great! What am I?",
+        answer: "Roof soffit or roof vent"
+      },
+      {
+        question: "I'm a strong frame that supports the weight, giving stability to the roof, so great. What am I?",
+        answer: "Roof truss or roof beam"
+      },
+      {
+        question: "I'm a flat, open space for recreation, offering a view and relaxation sensation. What am I?",
+        answer: "Roof terrace or rooftop deck"
+      },
+      {
+        question: "I'm a tall structure that stands on the roof, catching wind and swirling with a woof. What am I?",
+        answer: "Roof turbine or roof vent"
+      },
+      {
+        question: "I'm a long, horizontal piece, providing shade and shelter with ease. What am I?",
+        answer: "Roof awning or roof overhang"
+      },
+      {
+        question: "I cover your home and keep you dry, protecting you from rain in the sky. What am I?",
+        answer: "Roof"
+      },
+      {
+        question: "I'm made of granules and asphalt black, installed in layers to keep things intact. What am I?",
+        answer: "Asphalt shingle"
+      },
+      {
+        question: "I'm the topmost part that you'll see, protecting your house from wind and debris. What am I?",
+        answer: "Roofing ridge"
+      },
+      {
+        question: "I'm a layer beneath the shingles' spread, shielding your home from water's dread. What am I?",
+        answer: "Underlayment"
+      },
+      {
+        question: "I'm nailed down and overlap with pride, forming a waterproof barrier side by side. What am I?",
+        answer: "Roofing felt"
+      },
+      {
+        question: "I'm often vented, allowing air to flow, reducing heat buildup and keeping things cool. What am I?",
+        answer: "Roofing ventilation"
+      },
+      {
+        question: "I'm made of metal, shiny and sleek, protecting vulnerable areas, so to speak. What am I?",
+        answer: "Flashing"
+      },
+      {
+        question: "I'm the finishing touch, the topmost part, adding aesthetic appeal to your home's chart. What am I?",
+        answer: "Roofing cap"
+      },
+      {
+        question: "I'm a flat, sloped surface, a roofer's delight, creating a waterproof seal day and night. What am I?",
+        answer: "Roofing membrane"
+      },
+      {
+        question: "I'm a shingle with a special flare, resembling the scales of a mythical creature rare. What am I?",
+        answer: "Dragon scale shingle"
+      }
+        // Add more riddles here
+      ];
+
+      const riddleContainer = document.querySelector("#riddle");
+      const generateButton = document.querySelector("#generate-button");
+      const solutionButton = document.querySelector("#solution-button");
+
+      // Function to generate a random riddle
+      function generateRiddle() {
+        const randomIndex = Math.floor(Math.random() * riddles.length);
+        const randomRiddle = riddles[randomIndex];
+        riddleContainer.textContent = randomRiddle.question;
+        solutionButton.textContent = "Solution";
+      }
+
+      // Function to reveal the solution to the riddle
+      function revealSolution() {
+        const currentRiddle = riddleContainer.textContent;
+        const matchedRiddle = riddles.find(riddle => riddle.question === currentRiddle);
+        if (matchedRiddle) {
+          solutionButton.textContent = `Solution: ${matchedRiddle.answer}`;
+        }
+      }
+
+      // Event listener for the Generate button
+      generateButton.addEventListener("click", generateRiddle);
+
+      // Event listener for the Solution button
+      solutionButton.addEventListener("click", revealSolution);
+
+    </script>
+
+  </body>
+</html>
